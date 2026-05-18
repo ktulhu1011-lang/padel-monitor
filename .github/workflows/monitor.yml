@@ -21,16 +21,21 @@ jobs:
       - name: Install deps
         run: pip install requests urllib3
 
-      - name: Check slots
-        env:
-          TG_TOKEN: ${{ secrets.TG_TOKEN }}
-          TG_CHAT_IDS: ${{ secrets.TG_CHAT_IDS }}
-        run: python check_slots.py
-
-      - name: Save state
+      - name: Configure git
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add slots_state.json
-          git diff --cached --quiet || git commit -m "update slots state"
-          git push
+
+      - name: Check every minute (5 раз)
+        env:
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_IDS: ${{ secrets.TG_CHAT_IDS }}
+        run: |
+          for i in 1 2 3 4 5; do
+            echo "=== Проверка $i/5 ==="
+            git pull --rebase origin main
+            python check_slots.py
+            git add slots_state.json
+            git diff --cached --quiet || (git commit -m "update slots state" && git push)
+            [ $i -lt 5 ] && sleep 60
+          done
