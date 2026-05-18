@@ -42,5 +42,5 @@ jobs:
             git add slots_state.json
             git diff --cached --quiet || git commit -m "update slots state"
             git push
-            [ $i -lt 5 ] && sleep 60
+            if [ $i -lt 5 ]; then sleep 60; fi
           done
