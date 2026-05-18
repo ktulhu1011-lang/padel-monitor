@@ -33,7 +33,10 @@ HEADERS = {
 
 
 def is_interesting(date_str: str, time_start: str) -> bool:
-    return True  # ТЕСТ: пропускаем все слоты
+    dt = datetime.strptime(date_str, "%Y-%m-%d")
+    weekday = dt.weekday()  # 0=пн, 5=сб, 6=вс
+    hour = int(time_start.split(":")[0])
+    return weekday >= 5 or (weekday < 5 and hour >= 19)
 
 
 def fetch_sessions() -> dict:
