@@ -41,8 +41,8 @@ def is_interesting(date_str: str, time_start: str) -> bool:
     is_evening_weekday = weekday < 5 and hour >= 19
     return is_weekend or is_evening_weekday
 
-TG_TOKEN = "8916283779:AAEsYO-WMl4_WZpgd-Kt4dTKyrtWUD_YZcM"
-TG_CHAT_IDS = ["190048502", "384414841"]  # Kirill, Александр
+TG_TOKEN = os.environ.get("TG_TOKEN", "")
+TG_CHAT_IDS = os.environ.get("TG_CHAT_IDS", "").split(",")  # задай через env
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
