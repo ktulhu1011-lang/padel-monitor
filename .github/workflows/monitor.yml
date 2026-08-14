@@ -34,6 +34,7 @@ jobs:
         env:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT_IDS: ${{ secrets.TG_CHAT_IDS }}
+          TG_CHAT_IDS_VNUKOVO: ${{ secrets.TG_CHAT_IDS_VNUKOVO }}
         run: |
           for i in 1 2 3 4 5; do
             echo "=== Проверка $i/5 ==="
